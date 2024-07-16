@@ -143,7 +143,7 @@ class WindowMSA(BaseModule):
         if mask is not None:
             nW = mask.shape[0]
             attn = attn.view(B_ // nW, nW, self.num_heads, N,
-                             N) + mask.unsqueeze(1).unsqueeze(0)
+                             N) + mask.unsqueeze(1).unsqueeze(0).type(attn.dtype)
             attn = attn.view(-1, self.num_heads, N, N)
             attn = self.softmax(attn)
         else:
@@ -321,7 +321,7 @@ class WindowMSAV2(BaseModule):
         if mask is not None:
             nW = mask.shape[0]
             attn = attn.view(B_ // nW, nW, self.num_heads, N,
-                             N) + mask.unsqueeze(1).unsqueeze(0)
+                             N) + mask.unsqueeze(1).unsqueeze(0).type(attn.dtype)
             attn = attn.view(-1, self.num_heads, N, N)
             attn = self.softmax(attn)
         else:
